@@ -1,0 +1,32 @@
+.nft-table {
+    border-collapse: collapse;
+    width: 50%;
+    height: 50%;
+    justify-content: center;
+  }
+  .nft-row{
+    text-align: center;
+    max-height: fit-content;
+  }
+  
+  .nft-cell {
+    padding: 10px;
+  }
+  
+  .nft-image{
+    width: 600px;
+    height: 600px;
+    object-fit: cover;
+  }
+
+  .buy-button {
+    font-family: 'Courier New', Courier, monospace;
+    background-color: transparent;
+    font-size: large;
+    font-weight: bold;
+    max-width: fit-content;
+    margin-top: 5px;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+  }

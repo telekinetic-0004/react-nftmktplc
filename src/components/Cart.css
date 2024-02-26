@@ -1,0 +1,100 @@
+/* Cart.css */
+
+/* Cart overlay */
+.cart-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.3s ease;
+  }
+  
+  .cart-overlay.open {
+    opacity: 1;
+  }
+  
+  /* Cart container */
+  .cart {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Cart items */
+  .cart-items {
+    max-height: 400px; /* Adjust as needed */
+    overflow-y: auto;
+  }
+  
+  /* Cart table */
+  .cart-contents {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .cart-contents th,
+  .cart-contents td {
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  .cart-contents th {
+    background-color: #f2f2f2;
+  }
+  
+  .cart-contents td img {
+    width: 60px; /* Decrease image size */
+    height: 60px; /* Decrease image size */
+    object-fit: cover;
+  }
+  
+  /* Cart actions */
+  .cart-actions {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  /* Action buttons */
+  .close-button,
+  .pay-button,
+  .clear-button,
+  .remove-button {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: large;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 6px;
+  }
+  
+  .remove-button {
+    background-color: crimson;
+    color: white;
+  }
+  
+  .pay-button {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .clear-button {
+    background-color: orange;
+  }
+  
+  .close-button {
+    background-color: red;
+    color: white;
+  }
+  

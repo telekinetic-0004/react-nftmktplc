@@ -36,3 +36,28 @@
     transform: rotate(360deg);
   }
 }
+
+.app {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: larger;
+  font-weight: bold;
+  margin: 0 auto;
+  max-width: flex;
+  padding: 0;
+}
+
+.connect-wallet-button{
+  font-family: 'Courier New', Courier, monospace;
+  font-size: larger;
+  font-weight: bold;
+  font-variant: small-caps;
+  background-color: lightblue;
+  border: none;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 10px;
+}

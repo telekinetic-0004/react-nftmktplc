@@ -1,3 +1,7 @@
+# Project live-link
+
+`click this link - ` [_NFT Marketplace by Jaymin_](https://jaymin-nftmarketplace.vercel.app/)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

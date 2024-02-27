@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import './NFTData.css';
 
-const NFTData = ({ onBuyClick, cartItems = [], openCart }) => {
+const NFTData = ({ onBuyClick, cartItems = [], openCart, updateNFTList }) => {
   const [isInCart, setIsInCart] = useState([]);
 
-  // Define NFT data with randomized prices
   const nftData = useMemo(() => [
     {
       id: 1,
@@ -49,6 +48,10 @@ const NFTData = ({ onBuyClick, cartItems = [], openCart }) => {
     }
   };
 
+  useEffect(() => {
+    updateNFTList(cartItems);
+  }, [cartItems, updateNFTList]);
+
   const handleGoToCartClick = () => {
     openCart();
   };
@@ -60,7 +63,7 @@ const NFTData = ({ onBuyClick, cartItems = [], openCart }) => {
           index % 3 === 0 && (
             <tr key={index} className="nft-row">
               {nftData.slice(index, index + 3).map((item) => {
-                const isInCart = cartItems.some(cartItem => cartItem.id === item.id);
+                const isInCartLocal = cartItems.some(cartItem => cartItem.id === item.id);
                 return (
                   <td key={item.id} className="nft-cell">
                     <img 
@@ -69,8 +72,8 @@ const NFTData = ({ onBuyClick, cartItems = [], openCart }) => {
                       className="nft-image"
                     />
                     <br />
-                    <button className="buy-button" onClick={isInCart ? handleGoToCartClick : () => handleBuyClick(item)}>
-                      {isInCart ? 'Go to Cart' : `Add to Cart - Buy for ${item.price} ETH`}
+                    <button className="buy-button" onClick={isInCartLocal ? handleGoToCartClick : () => handleBuyClick(item)}>
+                      {isInCartLocal ? 'Go to Cart' : `Add to Cart - Buy for ${item.price} ETH`}
                     </button>
                   </td>
                 );

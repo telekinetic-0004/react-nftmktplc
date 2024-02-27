@@ -1,17 +1,22 @@
-// App.js
 import React, { useState, useEffect } from 'react';
 import Cart from './components/Cart';
 import NFTData from './components/NFTData';
 import PaymentModal from './components/PaymentModal';
-import Navbar from './components/Navbar'; // Import Navbar component
+import Navbar from './components/Navbar';
 import './App.css';
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
+  const [nftData, setNFTData] = useState([]);
   const [showCart, setShowCart] = useState(false);
-  const [showPaymentModal, setShowPaymentModal] = useState(false); // State to control PaymentModal visibility
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [isMetaMaskInstalled, setIsMetaMaskInstalled] = useState(false);
   const [isWalletConnected, setIsWalletConnected] = useState(false);
+
+  const updateNFTList = (purchasedItems) => {
+    const updatedNFTList = nftData.filter(item => !purchasedItems.some(purchasedItem => purchasedItem.id === item.id));
+    setNFTData(updatedNFTList);
+  };
 
   useEffect(() => {
     const checkMetaMaskInstalled = async () => {
@@ -58,11 +63,11 @@ function App() {
   };
 
   const handleOpenPaymentModal = () => {
-    setShowPaymentModal(true); // Open PaymentModal when called
+    setShowPaymentModal(true);
   };
 
   const handleClosePaymentModal = () => {
-    setShowPaymentModal(false); // Close PaymentModal when called
+    setShowPaymentModal(false);
   };
 
   if (!isMetaMaskInstalled) {
@@ -75,44 +80,48 @@ function App() {
 
   return (
     <div className='app'>
-      <Navbar handleOpenCart={handleOpenCart} />
-      {!isWalletConnected ? (
-        <div>
-          <h1>Please connect your MetaMask wallet to access the marketplace</h1>
-          <button onClick={connectWallet} className='connect-wallet-button'>Connect Wallet</button>
-        </div>
-      ) : (
-        <>
-          {showCart && (
-            <Cart
-              cartItems={cartItems}
-              removeFromCart={removeFromCart}
-              showCart={showCart}
-              clearCart={clearCart}
-              setShowCart={setShowCart}
-              openPaymentModal={handleOpenPaymentModal} // Pass function to open PaymentModal
-              handleCloseCart={handleCloseCart}
-            />
-          )}
-          <NFTData
-            onBuyClick={handleBuyClick}
-            cartItems={cartItems}
-            openCart={handleOpenCart}
-          />
-          {showPaymentModal && ( // Conditionally render PaymentModal
-            <div className='payment-modal-overlay'>
-              <div className='payment-modal-popup'>
-                <PaymentModal
-                  showPaymentModal={showPaymentModal}
-                  closePaymentModal={handleClosePaymentModal} // Pass function to close PaymentModal
-                  cartItems={cartItems}
-                />
-              </div>
-            </div>
-          )}
-        </>
-      )}
+  {!isWalletConnected && (
+    <div>
+      <h1>Please connect your MetaMask wallet (base-sepolia testnet) to access the marketplace</h1>
+      <button onClick={connectWallet} className='connect-wallet-button'>Connect Wallet</button>
     </div>
+  )}
+  {isWalletConnected && (
+    <>
+      <Navbar handleOpenCart={handleOpenCart} />
+      {showCart && (
+        <Cart
+          cartItems={cartItems}
+          removeFromCart={removeFromCart}
+          showCart={showCart}
+          clearCart={clearCart}
+          setShowCart={setShowCart}
+          openPaymentModal={handleOpenPaymentModal}
+          handleCloseCart={handleCloseCart}
+        />
+      )}
+      <NFTData
+        onBuyClick={handleBuyClick}
+        cartItems={cartItems}
+        openCart={handleOpenCart}
+        updateNFTList={updateNFTList}
+      />
+      {showPaymentModal && (
+        <div className='payment-modal-overlay'>
+          <div className='payment-modal-popup'>
+            <PaymentModal
+              showPaymentModal={showPaymentModal}
+              closePaymentModal={handleClosePaymentModal}
+              cartItems={cartItems}
+              updateNFTList={updateNFTList}
+            />
+          </div>
+        </div>
+      )}
+    </>
+  )}
+</div>
+
   );
 }
 

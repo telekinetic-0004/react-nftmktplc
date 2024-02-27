@@ -1,14 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Web3 from 'web3'; // Import Web3 library
+import Web3 from 'web3';
 import contractConfig from '../config.json';
 import './PaymentModal.css';
 import './Cart.css';
 
-function PaymentModal({ showPaymentModal, closePaymentModal, cartItems, setCartItems }) {
+function PaymentModal({ showPaymentModal, closePaymentModal, cartItems, setCartItems, updateNFTList }) {
   const [isProcessing, setIsProcessing] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  // Access contract address and ABI
   const contractAddress = contractConfig.contractAddress;
   const contractABI = contractConfig.contractABI;
 
@@ -48,8 +47,6 @@ function PaymentModal({ showPaymentModal, closePaymentModal, cartItems, setCartI
   
       for (const item of cartItems) {
         const amountToSend = web3Ref.current.utils.toWei(item.price, 'ether');
-  
-        // Assuming item.id is the token ID of the NFT to be purchased
         const transaction = await contractInstanceRef.current.methods.purchase(item.id).send({
           from: account,
           value: amountToSend,
@@ -60,15 +57,15 @@ function PaymentModal({ showPaymentModal, closePaymentModal, cartItems, setCartI
       }
   
       setIsProcessing(false);
-      setCartItems([]); // Clear cart after successful purchase
+      setCartItems([]);
       closePaymentModal();
+      updateNFTList(cartItems);
     } catch (error) {
       setIsProcessing(false);
       setErrorMessage('Error processing purchase. Please try again.');
       console.error('Error purchasing NFTs:', error);
     }
   };
-  
   
   return (
     <div className={`modal ${showPaymentModal ? 'show' : ''}`}>
@@ -77,7 +74,7 @@ function PaymentModal({ showPaymentModal, closePaymentModal, cartItems, setCartI
         
         {errorMessage && <div className="error">{errorMessage}</div>}
         {isProcessing ? (
-          <div className="spinner"></div> // Add a spinner for processing indicator
+          <div className="spinner"></div>
         ) : (
           <>
             <p>Confirm purchase of {cartItems.length} NFT(s)?</p>
